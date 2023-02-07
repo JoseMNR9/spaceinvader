@@ -35,14 +35,11 @@ public class Game {
     }
     public void loop(){
         try {
-            int y=0, x=0;
             screen.startScreen();
             screen.clear();
             while(!this.exit_key){
                 //Se procesa la entrada
                 process_input();
-                x=(int) Math.random()*80;
-                y=(int)  Math.random()*24;
             }
             //Al salir del bucle se cierra la terminal y el bucle
             screen.close();
