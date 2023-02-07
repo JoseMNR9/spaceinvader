@@ -52,13 +52,13 @@ public class Point2D {
      * @param inc_x 
      */
     public void addx(int inc_x){
-        this.setX(this.getX() + inc_x);
+        this.x+=inc_x;
     }
     /**
      * Incremento o decremento del eje y
      * @param inc_y 
      */
     public void addy(int inc_y){
-        this.setY(this.getY() + inc_y);
+        this.y+=inc_y;
     }
 }

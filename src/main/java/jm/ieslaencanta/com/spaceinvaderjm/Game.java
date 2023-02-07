@@ -23,6 +23,9 @@ public class Game {
     private Terminal terminal;
     private Screen screen;
     private boolean exit_key;
+    
+    private Bullet bala;
+    
     public Game(){
         this.exit_key = false;
         try {
@@ -32,6 +35,7 @@ public class Game {
         } catch (IOException ex) {
             Logger.getLogger(Game.class.getName()).log(Level.SEVERE, null, ex);
         }
+        bala = new Bullet(40,12);
     }
     public void loop(){
         try {
@@ -40,6 +44,8 @@ public class Game {
             while(!this.exit_key){
                 //Se procesa la entrada
                 process_input();
+                update();
+                paint();
             }
             //Al salir del bucle se cierra la terminal y el bucle
             screen.close();
@@ -48,7 +54,13 @@ public class Game {
             Logger.getLogger(Game.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
+    private void update(){
+        
+    }
+    private void paint() throws IOException{
+        this.bala.paint(screen);
+        screen.refresh();
+    }
     private void process_input() {
         KeyStroke keyStroke=null;
         try {
