@@ -4,6 +4,9 @@
  */
 package jm.ieslaencanta.com.spaceinvaderjm;
 
+import com.googlecode.lanterna.TerminalSize;
+import com.googlecode.lanterna.TextCharacter;
+import com.googlecode.lanterna.TextColor;
 import com.googlecode.lanterna.input.KeyStroke;
 import com.googlecode.lanterna.input.KeyType;
 import com.googlecode.lanterna.screen.Screen;
@@ -23,8 +26,10 @@ public class Game {
     private Terminal terminal;
     private Screen screen;
     private boolean exit_key;
-    
+    private static int columns=80;
+    private static int rows=24;
     private Bullet bala;
+    private Ship ship;
     
     public Game(){
         this.exit_key = false;
@@ -36,6 +41,7 @@ public class Game {
             Logger.getLogger(Game.class.getName()).log(Level.SEVERE, null, ex);
         }
         bala = new Bullet(40,12);
+        ship = new Ship(38,20);
     }
     public void loop(){
         try {
@@ -46,6 +52,11 @@ public class Game {
                 process_input();
                 update();
                 paint();
+                try {
+                    Thread.sleep((1/60)*1000);
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(Game.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
             //Al salir del bucle se cierra la terminal y el bucle
             screen.close();
@@ -57,7 +68,14 @@ public class Game {
     private void update(){
         
     }
-    private void paint() throws IOException{
+    private void paint( ) throws IOException {
+        TerminalSize terminalSize = this.screen.getTerminalSize();
+        for (int column = 0; column < terminalSize.getColumns(); column++){
+            for (int row = 0; row < terminalSize.getRows(); row++) {
+                this.screen.setCharacter(column, row, new TextCharacter(' ',TextColor.ANSI.DEFAULT,TextColor.ANSI.BLACK));
+            }
+        }
+        this.ship.paint(screen);
         this.bala.paint(screen);
         screen.refresh();
     }
@@ -73,6 +91,12 @@ public class Game {
             //mira si pulsa escape
             if (keyStroke.getKeyType() == KeyType.Escape) {
                 this.exit_key = true;
+            }
+            if(keyStroke.getKeyType() == KeyType.ArrowUp){
+                this.bala.moveVertical(-1, 0, Game.rows);
+            }
+            if(keyStroke.getKeyType()== KeyType.ArrowDown){
+                this.bala.moveVertical(1, 0, Game.rows);
             }
         }
     }
