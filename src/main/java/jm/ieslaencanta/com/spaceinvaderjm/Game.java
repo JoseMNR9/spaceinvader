@@ -22,11 +22,11 @@ import java.util.logging.Logger;
  * @author DAWTarde
  */
 public class Game {
-    
+   
     private Terminal terminal;
     private Screen screen;
     private boolean exit_key;
-    private static int columns=80;
+    private static int  columns=80;
     private static int rows=24;
     private Bullet bala;
     private Ship ship;
@@ -66,7 +66,7 @@ public class Game {
         }
     }
     private void update(){
-        
+        this.ship.moveBullet();
     }
     private void paint( ) throws IOException {
         TerminalSize terminalSize = this.screen.getTerminalSize();
@@ -97,6 +97,15 @@ public class Game {
             }
             if(keyStroke.getKeyType()== KeyType.ArrowDown){
                 this.bala.moveVertical(1, 0, Game.rows);
+            }
+             if(keyStroke.getKeyType() == KeyType.ArrowLeft){
+                this.ship.moveHorizontal(-1, 0, Game.columns);
+            }
+            if(keyStroke.getKeyType()== KeyType.ArrowRight){
+                this.ship.moveHorizontal(1, 0, Game.columns);
+            }
+            if(keyStroke.getKeyType()== KeyType.Enter){
+                this.ship.shoot();
             }
         }
     }
