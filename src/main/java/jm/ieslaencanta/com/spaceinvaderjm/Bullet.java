@@ -18,7 +18,7 @@ public class Bullet {
     private TextColor color;
     private TextColor backgroundcolor;
     private TextCharacter bulletsymbol;
-    private static int CUENTER_MAX=30;
+    private static int CUENTER_MAX=50;
     private int counter=CUENTER_MAX;
     
     public Bullet(){
@@ -39,15 +39,22 @@ public class Bullet {
         this.bulletsymbol = TextCharacter.fromCharacter(Symbols.ARROW_UP)[0].withBackgroundColor(this.backgroundcolor);
     }
     public void paint(Screen s){
-        s.setCharacter(this.position.getX(), this.position.getY(),this.bulletsymbol);
+        s.setCharacter(this.getPosition().getX(), this.getPosition().getY(),this.bulletsymbol);
     }
     public void moveVertical(int incy,int miny, int maxy){
          this.counter--;
         if(this.counter<=0){
             this.counter=CUENTER_MAX;
-            if(this.position.getY() + incy >= miny && this.position.getY() + incy < maxy){
-            this.position.addy(incy);
+            if(this.getPosition().getY() + incy >= miny && this.getPosition().getY() + incy < maxy){
+                this.getPosition().addy(incy);
             }
         }
+    }
+
+    /**
+     * @return the position
+     */
+    public Point2D getPosition() {
+        return position;
     }
 }

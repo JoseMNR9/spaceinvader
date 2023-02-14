@@ -101,12 +101,21 @@ public class Ship {
        }
     }
     public void shoot(){
-        this.bullets[0]= new Bullet(this.position.getX() + this.widht/2, this.position.getY()-1);
+        boolean encontrado=false;
+        for(int i=0; i<this.max_bullets && !encontrado;i++){
+            if (this.bullets[i]==null){
+                this.bullets[i]= new Bullet(this.position.getX() + this.widht/2, this.position.getY()-1);
+                encontrado = true;
+            }    
+        }
     }
     public void moveBullet(){
         for(int i=0; i<this.bullets.length;i++){
             if(this.bullets[i] != null){
                this.bullets[i].moveVertical(-1, 0, 24);
+               if(this.bullets[i].getPosition().getY()<=0){
+                   this.bullets[i]=null;
+               }
             }
         }
     }

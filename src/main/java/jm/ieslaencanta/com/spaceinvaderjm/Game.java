@@ -30,6 +30,7 @@ public class Game {
     private static int rows=24;
     private Bullet bala;
     private Ship ship;
+    private Wall walls[];
     
     public Game(){
         this.exit_key = false;
@@ -40,8 +41,13 @@ public class Game {
         } catch (IOException ex) {
             Logger.getLogger(Game.class.getName()).log(Level.SEVERE, null, ex);
         }
-        bala = new Bullet(40,12);
         ship = new Ship(38,20);
+    }
+    private void createwall(){
+        this.walls= new Wall[4];
+        for(int i=0; i<this.walls.length; i++){
+            this.walls[i]=new Wall(new Point2D(((i+1)*20),10));
+        }
     }
     public void loop(){
         try {
@@ -76,8 +82,12 @@ public class Game {
             }
         }
         this.ship.paint(screen);
-        this.bala.paint(screen);
         screen.refresh();
+    }
+    private void paintcreatewall(Screen s){
+        for(int i=0; i<this.walls.length; i++){
+            this.walls[i].paint(s);
+        }
     }
     private void process_input() {
         KeyStroke keyStroke=null;
