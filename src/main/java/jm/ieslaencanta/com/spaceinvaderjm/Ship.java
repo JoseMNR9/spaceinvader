@@ -70,6 +70,20 @@ public class Ship {
         this.widht = widht;
     }
 
+    /**
+     * @return the bullets
+     */
+    public Bullet[] getBullets() {
+        return bullets;
+    }
+
+    /**
+     * @param bullets the bullets to set
+     */
+    public void setBullets(Bullet[] bullets) {
+        this.bullets = bullets;
+    }
+
    
     /*private void init() {
         this.color = TextColor.ANSI.GREEN;
@@ -94,27 +108,27 @@ public class Ship {
                
            }
        }
-       for(int i=0; i<this.bullets.length;i++){
-           if(this.bullets[i] != null){
-               this.bullets[i].paint(s);
+       for(int i=0; i<this.getBullets().length;i++){
+           if(this.getBullets()[i] != null){
+               this.getBullets()[i].paint(s);
            }
        }
     }
     public void shoot(){
         boolean encontrado=false;
         for(int i=0; i<this.max_bullets && !encontrado;i++){
-            if (this.bullets[i]==null){
-                this.bullets[i]= new Bullet(this.position.getX() + this.widht/2, this.position.getY()-1);
+            if (this.getBullets()[i]==null){
+                this.getBullets()[i]= new Bullet(this.position.getX() + this.widht/2, this.position.getY()-1);
                 encontrado = true;
             }    
         }
     }
     public void moveBullet(){
-        for(int i=0; i<this.bullets.length;i++){
-            if(this.bullets[i] != null){
-               this.bullets[i].moveVertical(-1, 0, 24);
-               if(this.bullets[i].getPosition().getY()<=0){
-                   this.bullets[i]=null;
+        for(int i=0; i<this.getBullets().length;i++){
+            if(this.getBullets()[i] != null){
+                this.getBullets()[i].moveVertical(-1, 0, 24);
+               if(this.getBullets()[i].getPosition().getY()<=0){
+                   this.getBullets()[i]=null;
                }
             }
         }

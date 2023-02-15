@@ -31,6 +31,7 @@ public class Game {
     private Bullet bala;
     private Ship ship;
     private Wall walls[];
+    private Wall col;
     
     public Game(){
         this.exit_key = false;
@@ -42,11 +43,12 @@ public class Game {
             Logger.getLogger(Game.class.getName()).log(Level.SEVERE, null, ex);
         }
         ship = new Ship(38,20);
+        this.createwall();
     }
     private void createwall(){
         this.walls= new Wall[4];
         for(int i=0; i<this.walls.length; i++){
-            this.walls[i]=new Wall(new Point2D(((i+1)*20),10));
+            this.walls[i]=new Wall(new Point2D(((i+1)*20),15));
         }
     }
     public void loop(){
@@ -73,6 +75,19 @@ public class Game {
     }
     private void update(){
         this.ship.moveBullet();
+        this.Collision();
+    }
+    private void Collision(){
+        Bullet[] ship_bullets = this.ship.getBullets();
+        for(int i=0; i<this.walls.length;i++){
+            for(int j=0; j<ship_bullets.length;j++){
+                if(this.walls[i] != null && ship_bullets[j] != null){
+                    if(this.walls[i].collision(ship_bullets[j])){
+                        ship_bullets[j]=null;
+                    }    
+                }
+            }
+        }
     }
     private void paint( ) throws IOException {
         TerminalSize terminalSize = this.screen.getTerminalSize();
@@ -82,6 +97,7 @@ public class Game {
             }
         }
         this.ship.paint(screen);
+        this.paintcreatewall(screen);
         screen.refresh();
     }
     private void paintcreatewall(Screen s){

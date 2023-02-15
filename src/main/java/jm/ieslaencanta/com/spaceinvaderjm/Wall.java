@@ -65,14 +65,20 @@ public class Wall {
            }
         }
     }
-    public boolean collision(Bullet bullets){
-        for(int i=0;i<this.cartoon.length;i++){
-            for(int j=0; j<this.cartoon.length;j++){
-                if(this.getPosition()==bullets.getPosition()){
-                    this.position=null;
-                }
+    public boolean collision(Bullet b){
+        boolean col=false;
+        int cordy,cordx;
+        if(this.position.getY()<=b.getPosition().getY() && 
+           this.position.getY() + this.height > b.getPosition().getY() &&
+           this.position.getX()<=b.getPosition().getX() &&
+           this.position.getX() + this.widht > b.getPosition().getX()){
+            cordy= b.getPosition().getY() - this.position.getY();
+            cordx=b.getPosition().getX() - this.position.getX();
+            if(this.cartoon[cordy][cordx] != ' '){
+                col=true;
+                this.cartoon[cordy][cordx]= ' ';
             }
-        }    
-        return true;
+        }
+     return col;
     }
 }
