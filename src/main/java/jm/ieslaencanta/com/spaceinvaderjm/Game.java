@@ -32,6 +32,7 @@ public class Game {
     private Ship ship;
     private Wall walls[];
     private Wall col;
+    private Enemy enemy;
     
     public Game(){
         this.exit_key = false;
@@ -43,6 +44,7 @@ public class Game {
             Logger.getLogger(Game.class.getName()).log(Level.SEVERE, null, ex);
         }
         ship = new Ship(38,20);
+        enemy = new Enemy(40,5);
         this.createwall();
     }
     private void createwall(){
@@ -75,7 +77,8 @@ public class Game {
     }
     private void update(){
         this.ship.moveBullet();
-        this.Collision();
+        this.enemy.moveBullet();
+        this.Collision(); 
     }
     private void Collision(){
         Bullet[] ship_bullets = this.ship.getBullets();
@@ -98,6 +101,7 @@ public class Game {
         }
         this.ship.paint(screen);
         this.paintcreatewall(screen);
+        this.enemy.paint(screen);
         screen.refresh();
     }
     private void paintcreatewall(Screen s){
@@ -132,6 +136,7 @@ public class Game {
             }
             if(keyStroke.getKeyType()== KeyType.Enter){
                 this.ship.shoot();
+                this.enemy.shoot();
             }
         }
     }
