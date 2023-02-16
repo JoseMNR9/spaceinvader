@@ -19,7 +19,7 @@ public class Enemy {
     private Bullet bullets[];
     private TextColor color;
     private TextColor backgroundcolor;
-    private static int max_bullets = 1;
+    private static int max_bullets = 5;
     private String cartoon[]= {          
             "⣴⡶⢿⡿⢶⣦",
              "⣉⠽⠫⠝⠯⣉"};
@@ -105,7 +105,7 @@ public class Enemy {
         for(int i=0; i<this.getBullets().length;i++){
             if(this.getBullets()[i] != null){
                 this.getBullets()[i].moveVertical(1, 0, 24);
-               if(this.getBullets()[i].getPosition().getY()<=0){
+               if(this.getBullets()[i].getPosition().getY() >= 22){
                    this.getBullets()[i]=null;
                }
             }

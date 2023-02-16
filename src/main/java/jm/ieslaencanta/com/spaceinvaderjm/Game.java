@@ -32,7 +32,7 @@ public class Game {
     private Ship ship;
     private Wall walls[];
     private Wall col;
-    private Enemy enemy;
+    private Enemy enemy[];
     
     public Game(){
         this.exit_key = false;
@@ -44,13 +44,19 @@ public class Game {
             Logger.getLogger(Game.class.getName()).log(Level.SEVERE, null, ex);
         }
         ship = new Ship(38,20);
-        enemy = new Enemy(40,5);
+        this.createenemy();
         this.createwall();
+    }
+    private void createenemy(){
+        this.enemy= new Enemy[6];
+        for(int i=0; i<this.enemy.length; i++){
+            this.enemy[i]=new Enemy(new Point2D(((i+1)*10),5));
+        }
     }
     private void createwall(){
         this.walls= new Wall[4];
         for(int i=0; i<this.walls.length; i++){
-            this.walls[i]=new Wall(new Point2D(((i+1)*20),15));
+            this.walls[i]=new Wall(new Point2D(((i+1)*15),15));
         }
     }
     public void loop(){
@@ -77,7 +83,7 @@ public class Game {
     }
     private void update(){
         this.ship.moveBullet();
-        this.enemy.moveBullet();
+        
         this.Collision(); 
     }
     private void Collision(){
@@ -101,12 +107,17 @@ public class Game {
         }
         this.ship.paint(screen);
         this.paintcreatewall(screen);
-        this.enemy.paint(screen);
+        this.paintenemy(screen);
         screen.refresh();
     }
     private void paintcreatewall(Screen s){
         for(int i=0; i<this.walls.length; i++){
             this.walls[i].paint(s);
+        }
+    }
+    private void paintenemy(Screen s){
+        for(int i=0; i<this.enemy.length; i++){
+            this.enemy[i].paint(s);
         }
     }
     private void process_input() {
@@ -136,7 +147,7 @@ public class Game {
             }
             if(keyStroke.getKeyType()== KeyType.Enter){
                 this.ship.shoot();
-                this.enemy.shoot();
+               
             }
         }
     }
