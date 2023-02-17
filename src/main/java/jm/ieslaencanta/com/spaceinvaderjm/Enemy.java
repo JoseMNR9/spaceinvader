@@ -23,6 +23,10 @@ public class Enemy {
     private String cartoon[]= {          
             "⣴⡶⢿⡿⢶⣦",
              "⣉⠽⠫⠝⠯⣉"};
+    private String cartoon2[]={
+        "⢀⡵⣤⡴⣅ ",
+         "⠏⢟⡛⣛⠏⠇"};
+    
     public Enemy(){
        this.position=new Point2D();
        this.bullets = new Bullet[Enemy.max_bullets];
@@ -79,11 +83,17 @@ public class Enemy {
     }
      public void paint(Screen s){
         char c;
+        char c2;
         for(int i=0;i<this.height;i++){
             for (int j=0;j<this.getWidht();j++){
                c=this.cartoon[i].charAt(j);
                s.setCharacter(this.getPosition().getX() + j, this.getPosition().getY() + i, new TextCharacter (c, TextColor.ANSI.WHITE, TextColor.ANSI.BLACK));
-               
+           }
+       }
+        for(int i=0;i<this.height;i++){
+            for (int j=0;j<this.getWidht();j++){
+               c2=this.cartoon2[i].charAt(j);
+               s.setCharacter(this.getPosition().getX() + j, this.getPosition().getY() + i, new TextCharacter (c2, TextColor.ANSI.WHITE, TextColor.ANSI.BLACK));
            }
        }
         for(int i=0; i<this.getBullets().length;i++){
@@ -110,5 +120,26 @@ public class Enemy {
                }
             }
         }
+    }
+     public boolean collision(Bullet b){
+        boolean col=false;
+        int cordy,cordx;
+        if(this.position.getY()<=b.getPosition().getY() && 
+           this.position.getY() + this.height > b.getPosition().getY() &&
+           this.position.getX()<=b.getPosition().getX() &&
+           this.position.getX() + this.widht > b.getPosition().getX()){
+            cordy= b.getPosition().getY() - this.position.getY();
+            cordx=b.getPosition().getX() - this.position.getX();
+            if(this.cartoon != null){
+                col=true;
+                this.cartoon= null;
+                
+            }
+            if(this.cartoon2 != null){
+                col=true;
+                this.cartoon2= null;
+            }
+        }
+     return col;
     }
 }

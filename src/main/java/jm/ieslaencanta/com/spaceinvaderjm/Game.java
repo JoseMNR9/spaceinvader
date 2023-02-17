@@ -33,6 +33,7 @@ public class Game {
     private Wall walls[];
     private Wall col;
     private Enemy enemy[];
+    private Enemy enemy2[];
     
     public Game(){
         this.exit_key = false;
@@ -49,8 +50,12 @@ public class Game {
     }
     private void createenemy(){
         this.enemy= new Enemy[6];
+        this.enemy2= new Enemy[6];
         for(int i=0; i<this.enemy.length; i++){
-            this.enemy[i]=new Enemy(new Point2D(((i+1)*10),5));
+            this.enemy[i]=new Enemy(new Point2D(((i+1)*10),10));
+        }
+        for(int i=0; i<this.enemy2.length; i++){
+            this.enemy2[i]=new Enemy(new Point2D((i+1)*10,5));
         }
     }
     private void createwall(){
@@ -97,6 +102,24 @@ public class Game {
                 }
             }
         }
+        for(int i=0; i<this.enemy.length;i++){
+            for(int j=0; j<ship_bullets.length;j++){
+                if(this.enemy[i] != null && ship_bullets[j] != null){
+                    if(this.enemy[i].collision(ship_bullets[j])){
+                        ship_bullets[j]=null;
+                    }    
+                }
+            }
+        }
+        for(int i=0; i<this.enemy2.length;i++){
+            for(int j=0; j<ship_bullets.length;j++){
+                if(this.enemy2[i] != null && ship_bullets[j] != null){
+                    if(this.enemy2[i].collision(ship_bullets[j])){
+                        ship_bullets[j]=null;
+                    }    
+                }
+            }
+        }
     }
     private void paint( ) throws IOException {
         TerminalSize terminalSize = this.screen.getTerminalSize();
@@ -118,6 +141,9 @@ public class Game {
     private void paintenemy(Screen s){
         for(int i=0; i<this.enemy.length; i++){
             this.enemy[i].paint(s);
+        }
+        for(int i=0; i<this.enemy.length; i++){
+            this.enemy2[i].paint(s);
         }
     }
     private void process_input() {
